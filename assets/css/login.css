@@ -1,0 +1,142 @@
+/**
+ * 登入頁面樣式
+ * Login Page Styles
+ * 半導體產業風格 - Semiconductor Industry Style
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+}
+
+.login-container {
+    background: rgba(26, 31, 58, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 102, 204, 0.3);
+    padding: 50px;
+    width: 450px;
+    max-width: 90%;
+    border: 1px solid rgba(0, 102, 204, 0.2);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.login-header h1 {
+    color: #0066cc;
+    font-size: 28px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    text-shadow: 0 0 20px rgba(0, 102, 204, 0.5);
+}
+
+.login-header p {
+    color: #a0a0a0;
+    font-size: 14px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: #b0b0b0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-group input {
+    background: rgba(10, 14, 39, 0.7);
+    border: 1px solid rgba(0, 102, 204, 0.3);
+    border-radius: 8px;
+    padding: 14px 16px;
+    color: #ffffff;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 15px rgba(0, 102, 204, 0.4);
+    background: rgba(10, 14, 39, 0.9);
+}
+
+.form-group input::placeholder {
+    color: #606060;
+}
+
+.login-button {
+    background: linear-gradient(135deg, #0066cc 0%, #003d7a 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 102, 204, 0.6);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+.error-message {
+    background: rgba(255, 107, 107, 0.2);
+    border: 1px solid #ff6b6b;
+    border-radius: 8px;
+    padding: 12px;
+    color: #ff6b6b;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #707070;
+    font-size: 13px;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .login-container {
+        padding: 35px 25px;
+        width: 95%;
+    }
+    
+    .login-header h1 {
+        font-size: 24px;
+    }
+}
