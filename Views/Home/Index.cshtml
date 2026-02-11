@@ -1,0 +1,159 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "儀表板";
+}
+
+<!-- 今日重點機台 -->
+<div class="page-header">
+    <h2><i class="bi bi-star"></i> 今日重點機台</h2>
+</div>
+
+<div class="row mb-4">
+    @foreach (var equipment in Model.HighlightEquipments)
+    {
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card equipment-card">
+                <span class="status-indicator @equipment.Status.ToString().ToLower()"></span>
+                <div class="card-body">
+                    <h5 class="card-title">@equipment.EquipmentId</h5>
+                    <p class="text-muted mb-3">@equipment.EquipmentName</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted">狀態</span>
+                        <span class="badge badge-@equipment.Status.ToString().ToLower()">
+                            @(equipment.Status == EquipmentStatus.Online ? "運作中" : 
+                              equipment.Status == EquipmentStatus.Warning ? "警告" : "離線")
+                        </span>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <div class="d-flex justify-content-between mb-1">
+                            <small class="text-muted">稼動率</small>
+                            <small class="text-accent">@equipment.Utilization.ToString("F1")%</small>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar @(equipment.Utilization >= 90 ? "bg-success" : equipment.Utilization >= 70 ? "" : "bg-danger")" 
+                                 style="width: @equipment.Utilization%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="param-item">
+                        <span class="param-label">溫度</span>
+                        <span class="param-value">@equipment.Temperature.ToString("F1")°C</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- WIP Trend Chart -->
+<div class="page-header">
+    <h2><i class="bi bi-graph-up"></i> WIP 趨勢圖</h2>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="wipTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 重點機台機況現況 -->
+<div class="page-header">
+    <h2><i class="bi bi-hdd-rack"></i> 重點機台機況現況</h2>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>機台編號</th>
+                                <th>機台名稱</th>
+                                <th>狀態</th>
+                                <th>稼動率</th>
+                                <th>溫度</th>
+                                <th>壓力</th>
+                                <th>產能</th>
+                                <th>最後更新</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var equipment in Model.AllEquipments)
+                            {
+                                <tr>
+                                    <td><strong>@equipment.EquipmentId</strong></td>
+                                    <td>@equipment.EquipmentName</td>
+                                    <td>
+                                        <span class="status-dot @equipment.Status.ToString().ToLower()"></span>
+                                        <span class="badge badge-@equipment.Status.ToString().ToLower()">
+                                            @(equipment.Status == EquipmentStatus.Online ? "運作中" : 
+                                              equipment.Status == EquipmentStatus.Warning ? "警告" : "離線")
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div style="min-width: 120px;">
+                                            <div class="progress">
+                                                <div class="progress-bar @(equipment.Utilization >= 90 ? "bg-success" : equipment.Utilization >= 70 ? "" : "bg-danger")" 
+                                                     style="width: @equipment.Utilization%">
+                                                    @equipment.Utilization.ToString("F0")%
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>@equipment.Temperature.ToString("F1")°C</td>
+                                    <td>@equipment.Pressure.ToString("F1") bar</td>
+                                    <td>@equipment.Capacity pcs/hr</td>
+                                    <td>@equipment.LastUpdate.ToString("HH:mm")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 機況頁面快速連結 -->
+<div class="page-header">
+    <h2><i class="bi bi-link-45deg"></i> 機況頁面快速連結</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <a href="/Equipment/ET12Status" class="quick-link-card">
+            <div class="card">
+                <div class="card-body">
+                    <i class="bi bi-hdd-rack-fill"></i>
+                    <h3 class="mt-3">ET1/2 機況</h3>
+                    <p class="text-muted">蝕刻機與沉積機設備狀態監控</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6 mb-3">
+        <a href="/Equipment/ET3Status" class="quick-link-card">
+            <div class="card">
+                <div class="card-body">
+                    <i class="bi bi-clipboard-data-fill"></i>
+                    <h3 class="mt-3">ET3 機況</h3>
+                    <p class="text-muted">檢測設備狀態監控</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/dashboard-charts.js"></script>
+}

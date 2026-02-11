@@ -1,0 +1,272 @@
+/* 側邊欄樣式 */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 260px;
+    background-color: var(--bg-secondary, #1a1f3a);
+    border-right: 1px solid var(--border-color, #2a3150);
+    transition: transform 0.3s ease, width 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.sidebar.collapsed {
+    width: 70px;
+}
+
+.sidebar.hidden {
+    transform: translateX(-100%);
+}
+
+/* 側邊欄頭部 */
+.sidebar-header {
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid var(--border-color, #2a3150);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--bg-primary, #0a0e27);
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    color: var(--text-primary, #ffffff);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.sidebar-brand i {
+    color: var(--color-accent, #00a8ff);
+    margin-right: 0.75rem;
+    font-size: 1.5rem;
+}
+
+.sidebar.collapsed .sidebar-brand span {
+    display: none;
+}
+
+.sidebar-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary, #a8b2d1);
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.2s;
+}
+
+.sidebar-toggle:hover {
+    color: var(--color-accent, #00a8ff);
+}
+
+.sidebar.collapsed .sidebar-toggle i::before {
+    content: "\f138"; /* Bootstrap icon for chevron-right */
+}
+
+/* 側邊欄選單 */
+.sidebar-menu {
+    padding: 1rem 0;
+    list-style: none;
+    margin: 0;
+}
+
+.sidebar-menu-item {
+    margin-bottom: 0.25rem;
+}
+
+.sidebar-menu-link {
+    display: flex;
+    align-items: center;
+    padding: 0.875rem 1.25rem;
+    color: var(--text-secondary, #a8b2d1);
+    text-decoration: none;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.sidebar-menu-link:hover {
+    background-color: rgba(0, 168, 255, 0.1);
+    color: var(--color-accent, #00a8ff);
+}
+
+.sidebar-menu-link.active {
+    background-color: rgba(0, 168, 255, 0.15);
+    color: var(--color-accent, #00a8ff);
+    border-left: 3px solid var(--color-accent, #00a8ff);
+}
+
+.sidebar-menu-link i {
+    min-width: 24px;
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.sidebar.collapsed .sidebar-menu-link span {
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-menu-link {
+    justify-content: center;
+    padding: 0.875rem 0.5rem;
+}
+
+.sidebar.collapsed .sidebar-menu-link i {
+    margin-right: 0;
+}
+
+/* 子選單 */
+.sidebar-submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.sidebar-menu-item.has-submenu.open .sidebar-submenu {
+    max-height: 500px;
+}
+
+.sidebar-submenu-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem 0.75rem 3.5rem;
+    color: var(--text-secondary, #a8b2d1);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.sidebar-submenu-link:hover {
+    background-color: rgba(0, 168, 255, 0.08);
+    color: var(--color-accent, #00a8ff);
+}
+
+.sidebar-submenu-link.active {
+    color: var(--color-accent, #00a8ff);
+}
+
+.sidebar.collapsed .sidebar-submenu {
+    display: none;
+}
+
+/* 展開/收合圖示 */
+.sidebar-menu-link.has-dropdown::after {
+    content: "\f282"; /* Bootstrap icon chevron-down */
+    font-family: "bootstrap-icons";
+    margin-left: auto;
+    transition: transform 0.3s;
+}
+
+.sidebar-menu-item.has-submenu.open .sidebar-menu-link.has-dropdown::after {
+    transform: rotate(180deg);
+}
+
+.sidebar.collapsed .sidebar-menu-link.has-dropdown::after {
+    display: none;
+}
+
+/* 主內容區域調整 */
+.main-content {
+    margin-left: 260px;
+    transition: margin-left 0.3s ease;
+    min-height: 100vh;
+}
+
+.main-content.sidebar-collapsed {
+    margin-left: 70px;
+}
+
+.main-content.sidebar-hidden {
+    margin-left: 0;
+}
+
+/* 手機漢堡選單 */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 999;
+    background-color: var(--bg-card, #1e2442);
+    border: 1px solid var(--border-color, #2a3150);
+    border-radius: 8px;
+    padding: 0.75rem;
+    cursor: pointer;
+    color: var(--text-primary, #ffffff);
+}
+
+.mobile-menu-toggle:hover {
+    background-color: var(--bg-secondary, #1a1f3a);
+}
+
+/* 遮罩層 (手機版) */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: 260px;
+    }
+    
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    
+    .sidebar.collapsed {
+        transform: translateX(-100%);
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .main-content.sidebar-collapsed {
+        margin-left: 0;
+    }
+    
+    .mobile-menu-toggle {
+        display: block;
+    }
+}
+
+/* 捲軸樣式 */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: var(--bg-primary, #0a0e27);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--border-color, #2a3150);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary, #0066cc);
+}

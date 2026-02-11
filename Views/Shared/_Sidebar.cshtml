@@ -1,0 +1,70 @@
+<aside class="sidebar">
+    <!-- 側邊欄頭部 -->
+    <div class="sidebar-header">
+        <a href="/" class="sidebar-brand">
+            <i class="bi bi-cpu-fill"></i>
+            <span>半導體入口</span>
+        </a>
+        <button class="sidebar-toggle">
+            <i class="bi bi-chevron-left"></i>
+        </button>
+    </div>
+
+    <!-- 側邊欄選單 -->
+    <ul class="sidebar-menu">
+        <!-- 首頁 -->
+        <li class="sidebar-menu-item">
+            <a href="/" class="sidebar-menu-link">
+                <i class="bi bi-house-door"></i>
+                <span>首頁</span>
+            </a>
+        </li>
+
+        <!-- 機台管理 -->
+        <li class="sidebar-menu-item has-submenu">
+            <a href="#" class="sidebar-menu-link has-dropdown">
+                <i class="bi bi-hdd-rack"></i>
+                <span>機台管理</span>
+            </a>
+            <ul class="sidebar-submenu">
+                <li>
+                    <a href="/Equipment/ET12Status" class="sidebar-submenu-link">
+                        ET1/2 機況
+                    </a>
+                </li>
+                <li>
+                    <a href="/Equipment/ET3Status" class="sidebar-submenu-link">
+                        ET3 機況
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- 數據分析 (預留) -->
+        <li class="sidebar-menu-item">
+            <a href="#" class="sidebar-menu-link">
+                <i class="bi bi-bar-chart"></i>
+                <span>數據分析</span>
+            </a>
+        </li>
+
+        <!-- 系統設定 (預留) -->
+        <li class="sidebar-menu-item">
+            <a href="#" class="sidebar-menu-link">
+                <i class="bi bi-gear"></i>
+                <span>系統設定</span>
+            </a>
+        </li>
+
+        <!-- 分隔線 -->
+        <li class="sidebar-menu-item" style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+            <form asp-controller="Account" asp-action="Logout" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="sidebar-menu-link" style="width: 100%; background: none; border: none; text-align: left;">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>登出</span>
+                </button>
+            </form>
+        </li>
+    </ul>
+</aside>
