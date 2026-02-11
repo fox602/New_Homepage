@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - 半導體產業入口網站</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/css/semiconductor-theme.css" />
+    <link rel="stylesheet" href="~/css/sidebar.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <!-- 側邊欄 -->
+    @await Html.PartialAsync("_Sidebar")
+
+    <!-- 側邊欄遮罩 (手機版) -->
+    <div class="sidebar-overlay"></div>
+
+    <!-- 手機版選單按鈕 -->
+    <button class="mobile-menu-toggle">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <!-- 主內容區域 -->
+    <div class="main-content">
+        <!-- 頂部導航列 -->
+        <div class="top-navbar">
+            <div class="navbar-title">
+                <i class="bi bi-cpu"></i> @ViewData["Title"]
+            </div>
+            <div class="navbar-user">
+                <span class="navbar-user-info">
+                    <i class="bi bi-person-circle"></i> @User.Identity?.Name
+                </span>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-box-arrow-right"></i> 登出
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 內容 -->
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/chart.js/chart.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/js/sidebar.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

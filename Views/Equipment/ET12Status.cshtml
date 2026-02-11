@@ -1,0 +1,145 @@
+@model List<Equipment>
+@{
+    ViewData["Title"] = "ET1/2 機況";
+}
+
+<!-- 頁面標題 -->
+<div class="page-header">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">首頁</a></li>
+            <li class="breadcrumb-item active">ET1/2 機況</li>
+        </ol>
+    </nav>
+    <h1><i class="bi bi-hdd-rack-fill"></i> ET1/2 機況</h1>
+    <p class="text-muted">蝕刻機與沉積機設備狀態監控</p>
+</div>
+
+<!-- 統計卡片 -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="stat-label">總設備數</div>
+                <div class="stat-number">@Model.Count</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="stat-label">運作中</div>
+                <div class="stat-number text-success">@Model.Count(e => e.Status == EquipmentStatus.Online)</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="stat-label">警告</div>
+                <div class="stat-number text-warning">@Model.Count(e => e.Status == EquipmentStatus.Warning)</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="stat-label">離線</div>
+                <div class="stat-number text-danger">@Model.Count(e => e.Status == EquipmentStatus.Offline)</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 設備詳細資訊 -->
+<div class="card">
+    <div class="card-header">
+        <h4 class="mb-0"><i class="bi bi-list-ul"></i> 設備詳細資訊</h4>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped equipment-table">
+                <thead>
+                    <tr>
+                        <th>設備 ID</th>
+                        <th>設備名稱</th>
+                        <th>類別</th>
+                        <th>狀態</th>
+                        <th>稼動率</th>
+                        <th>溫度</th>
+                        <th>壓力</th>
+                        <th>真空度</th>
+                        <th>產能</th>
+                        <th>最後更新</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var equipment in Model)
+                    {
+                        <tr>
+                            <td><strong>@equipment.EquipmentId</strong></td>
+                            <td>@equipment.EquipmentName</td>
+                            <td>
+                                <span class="badge bg-info">@equipment.Category</span>
+                            </td>
+                            <td>
+                                <span class="status-dot @equipment.Status.ToString().ToLower()"></span>
+                                <span class="badge badge-@equipment.Status.ToString().ToLower()">
+                                    @(equipment.Status == EquipmentStatus.Online ? "運作中" : 
+                                      equipment.Status == EquipmentStatus.Warning ? "警告" : "離線")
+                                </span>
+                            </td>
+                            <td>
+                                <div style="min-width: 120px;">
+                                    <div class="progress">
+                                        <div class="progress-bar @(equipment.Utilization >= 90 ? "bg-success" : equipment.Utilization >= 70 ? "" : "bg-danger")" 
+                                             style="width: @equipment.Utilization%">
+                                            @equipment.Utilization.ToString("F0")%
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="@(equipment.Temperature > 88 ? "text-danger" : "")">
+                                    @equipment.Temperature.ToString("F1")°C
+                                </span>
+                            </td>
+                            <td>@equipment.Pressure.ToString("F1") bar</td>
+                            <td>@equipment.Vacuum.ToString("F1") mTorr</td>
+                            <td>@equipment.Capacity pcs/hr</td>
+                            <td>@equipment.LastUpdate.ToString("yyyy/MM/dd HH:mm")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 詳細參數圖表區 (預留) -->
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-thermometer-half"></i> 溫度趨勢</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted text-center py-4">圖表功能開發中...</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-speedometer2"></i> 稼動率趨勢</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted text-center py-4">圖表功能開發中...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/equipment-monitor.js"></script>
+}

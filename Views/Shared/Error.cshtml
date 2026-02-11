@@ -1,0 +1,35 @@
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "錯誤";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <i class="bi bi-exclamation-triangle text-danger" style="font-size: 4rem;"></i>
+                    <h1 class="display-4 mt-3">發生錯誤</h1>
+                    <p class="lead text-muted mt-3">
+                        抱歉，處理您的請求時發生錯誤。
+                    </p>
+
+                    @if (Model.ShowRequestId)
+                    {
+                        <p class="mt-4 text-muted">
+                            <small>
+                                <strong>請求 ID:</strong> @Model.RequestId
+                            </small>
+                        </p>
+                    }
+
+                    <div class="mt-5">
+                        <a href="/" class="btn btn-primary">
+                            <i class="bi bi-house"></i> 返回首頁
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
